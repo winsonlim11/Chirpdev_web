@@ -550,6 +550,8 @@ section{scroll-margin-top:90px}
   /* sections */
   .sec{padding:clamp(44px,7vh,72px) 0}
   .sec__head{margin-bottom:clamp(28px,5vh,44px)}
+  /* force manifest to 1 col on phones (overrides 880px rule) */
+  .manifest{grid-template-columns:1fr}
   /* hero */
   .hero h1{font-size:clamp(34px,10vw,48px)}
   .hero p{font-size:15px;margin:20px 0 26px}
