@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Start Your Project — ChirpDev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#08080a;--ink-2:#121214;--ink-3:#17171a;
+  --amber:#ffffff;--amber-deep:#c9c9cf;
+  --text:#f4f4f5;--dim:#8b8b91;--dim-2:#5b5b61;
+  --line:rgba(255,255,255,.16);--hair:rgba(255,255,255,.09);
+  --nav-h:64px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--ink);color:var(--text);
+  font-family:"Archivo",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+input,textarea,button{font-family:inherit;color:inherit}
+::selection{background:#fff;color:#0a0a0b}
+.mono{font-family:"JetBrains Mono",monospace}
+.eyebrow{font-family:"JetBrains Mono",monospace;font-size:10.5px;
+  letter-spacing:.32em;text-transform:uppercase;color:var(--dim)}
+
+/* ---- PROGRESS ---- */
+.progress{position:fixed;top:0;left:0;right:0;z-index:60;
+  height:2px;background:rgba(255,255,255,.07)}
+.progress__fill{height:100%;background:var(--amber);
+  transition:width .55s cubic-bezier(.2,.7,.2,1);width:0%}
+
+/* ---- NAV ---- */
+.flow-nav{
+  position:fixed;top:2px;left:0;right:0;z-index:50;height:var(--nav-h);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(18px,5vw,48px);
+  background:rgba(8,8,10,.85);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--hair)}
+.logo-mark{display:flex;align-items:center;gap:9px;
+  font-weight:900;letter-spacing:.04em;font-size:17px}
+.logo-mark .glyph{width:26px;height:26px;border-radius:7px;
+  display:grid;place-items:center;background:var(--amber);
+  color:#0a0a0b;font-size:13px;font-weight:900}
+.logo-mark b{color:var(--amber)}
+.step-counter{font-family:"JetBrains Mono",monospace;font-size:10.5px;
+  letter-spacing:.2em;color:var(--dim);text-transform:uppercase}
+.back-btn{
+  cursor:pointer;border:1px solid var(--line);background:transparent;
+  color:var(--dim);font-family:"JetBrains Mono",monospace;font-size:10.5px;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 16px;border-radius:9px;
+  display:flex;align-items:center;gap:7px;
+  transition:color .2s,border-color .2s}
+.back-btn svg{width:13px;height:13px;flex-shrink:0}
+.back-btn:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
+.back-btn:disabled{opacity:.28;pointer-events:none}
+
+/* ---- FLOW LAYOUT ---- */
+.flow-wrap{position:relative;min-height:100svh;overflow:hidden}
+.step{
+  position:absolute;inset:0;overflow-y:auto;
+  display:flex;align-items:center;justify-content:center;
+  padding:calc(var(--nav-h) + 32px) clamp(20px,5vw,48px) 48px;
+  opacity:0;pointer-events:none;
+  transform:translateX(36px);
+  transition:opacity .42s cubic-bezier(.2,.7,.2,1),transform .42s cubic-bezier(.2,.7,.2,1)}
+.step.active{opacity:1;pointer-events:auto;transform:none}
+.step.exit{opacity:0;transform:translateX(-36px);transition-duration:.32s}
+.step__inner{width:100%;max-width:560px}
+
+/* ---- STEP HEAD ---- */
+.step-head{margin-bottom:30px}
+.step-head .eyebrow{display:block;margin-bottom:12px}
+.step-head h2{font-size:clamp(26px,4.5vw,40px);font-weight:900;
+  letter-spacing:-.03em;line-height:1.02}
+
+/* ---- WELCOME ---- */
+.welcome h1{font-size:clamp(38px,7vw,68px);font-weight:900;
+  letter-spacing:-.035em;line-height:.92;margin-bottom:18px}
+.welcome h1 em{font-style:normal;
+  background:linear-gradient(120deg,#fff,rgba(255,255,255,.6));
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.welcome__desc{color:rgba(244,236,221,.65);font-size:clamp(15px,1.5vw,18px);
+  line-height:1.7;margin-bottom:36px;max-width:42ch}
+.welcome__eyebrow{display:block;margin-bottom:20px}
+
+/* ---- TYPE CARDS ---- */
+.type-grid{display:flex;flex-direction:column;gap:10px}
+.type-card{
+  border:1px solid var(--hair);border-radius:16px;padding:20px 22px;
+  cursor:pointer;background:var(--ink-2);
+  display:flex;align-items:center;gap:18px;text-align:left;
+  transition:border-color .25s,background .25s,transform .2s}
+.type-card:hover{border-color:rgba(255,255,255,.26);background:#111116;transform:translateX(4px)}
+.type-card.selected{border-color:var(--amber);background:rgba(255,255,255,.03)}
+.type-card.selected:hover{transform:none}
+.type-card__body{flex:1}
+.type-card__no{font-family:"JetBrains Mono",monospace;font-size:10px;
+  letter-spacing:.24em;color:var(--dim);text-transform:uppercase;margin-bottom:5px}
+.type-card.selected .type-card__no{color:var(--amber)}
+.type-card h3{font-size:16px;font-weight:800;letter-spacing:-.01em;margin-bottom:3px}
+.type-card p{font-size:12.5px;color:rgba(244,236,221,.5);line-height:1.5}
+.type-card__radio{
+  width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);
+  flex-shrink:0;display:grid;place-items:center;
+  transition:border-color .25s,background .25s}
+.type-card.selected .type-card__radio{border-color:var(--amber);background:var(--amber)}
+.type-card__radio::after{
+  content:"";width:8px;height:8px;border-radius:50%;
+  background:#0a0a0b;opacity:0;transition:opacity .2s}
+.type-card.selected .type-card__radio::after{opacity:1}
+
+/* ---- INPUTS ---- */
+.flow-textarea{
+  width:100%;background:var(--ink-2);border:1px solid var(--hair);
+  border-radius:14px;padding:18px 20px;color:var(--text);font-size:14.5px;
+  line-height:1.7;resize:vertical;min-height:150px;outline:none;
+  transition:border-color .25s}
+.flow-textarea:focus{border-color:rgba(255,255,255,.34)}
+.flow-textarea::placeholder{color:var(--dim-2)}
+.step-hint{font-size:13px;color:var(--dim);margin-bottom:18px;
+  font-family:"JetBrains Mono",monospace;letter-spacing:.05em}
+.field-label{font-family:"JetBrains Mono",monospace;font-size:10px;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--dim);
+  display:block;margin-bottom:8px}
+.flow-input{
+  width:100%;background:var(--ink-2);border:1px solid var(--hair);
+  border-radius:12px;padding:14px 18px;color:var(--text);font-size:14px;
+  outline:none;transition:border-color .25s}
+.flow-input:focus{border-color:rgba(255,255,255,.34)}
+.flow-input::placeholder{color:var(--dim-2)}
+
+/* ---- TOGGLE (assets) ---- */
+.toggle-group{display:flex;flex-direction:column;gap:10px;margin-bottom:22px}
+.toggle-row{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  border:1px solid var(--hair);border-radius:14px;padding:16px 20px;
+  background:var(--ink-2)}
+.toggle-row__label{font-size:14px;font-weight:600;line-height:1.3}
+.toggle-btns{display:flex;gap:6px;flex-shrink:0}
+.toggle-btn{
+  cursor:pointer;border:1px solid var(--line);background:transparent;
+  color:var(--dim);font-family:"JetBrains Mono",monospace;font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 14px;border-radius:8px;
+  transition:color .2s,border-color .2s,background .2s}
+.toggle-btn:hover{color:var(--text);border-color:rgba(255,255,255,.3)}
+.toggle-btn.yes.active{color:#0a0a0b;background:var(--amber);border-color:var(--amber)}
+.toggle-btn.no.active{color:var(--text);background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
+
+/* ---- CONTACT ---- */
+.field-group{display:flex;flex-direction:column;gap:16px}
+
+/* ---- ESTIMATE ---- */
+.estimate-card{
+  border:1px solid rgba(255,255,255,.2);border-radius:20px;
+  background:linear-gradient(160deg,#16161e,#0f0f13);
+  padding:clamp(24px,3vw,38px);position:relative;overflow:hidden;
+  margin-bottom:22px}
+.estimate-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--amber) 40%,transparent)}
+.estimate-card__pkg{
+  font-family:"JetBrains Mono",monospace;font-size:10px;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.estimate-card h3{font-size:clamp(20px,3vw,28px);font-weight:900;letter-spacing:-.02em}
+.estimate-card__price{
+  font-size:clamp(24px,4vw,36px);font-weight:900;letter-spacing:-.025em;
+  color:var(--amber);margin:14px 0 5px}
+.estimate-card__timeline{
+  font-family:"JetBrains Mono",monospace;font-size:12px;
+  color:var(--dim);letter-spacing:.1em;margin-bottom:20px}
+.estimate-card__note{
+  font-size:13px;color:rgba(244,236,221,.52);
+  border-top:1px solid var(--hair);padding-top:16px;line-height:1.68}
+.process-flow{
+  display:flex;align-items:center;flex-wrap:wrap;gap:5px;margin-top:14px}
+.process-flow__step{
+  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.06em;
+  color:var(--dim);background:rgba(255,255,255,.05);
+  border:1px solid var(--hair);padding:5px 10px;border-radius:7px}
+.process-flow__arrow{color:var(--dim-2);font-size:11px;padding:0 2px}
+
+/* ---- SUMMARY ---- */
+.summary-card{
+  border:1px solid var(--hair);border-radius:14px;
+  background:var(--ink-2);padding:22px;
+  font-family:"JetBrains Mono",monospace;font-size:11.5px;
+  line-height:1.85;color:rgba(244,236,221,.68);
+  white-space:pre-wrap;max-height:300px;overflow-y:auto;margin-bottom:20px}
+.summary-card::-webkit-scrollbar{width:3px}
+.summary-card::-webkit-scrollbar-thumb{background:var(--hair);border-radius:2px}
+.summary-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* ---- BUTTONS ---- */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:none;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:14px;
+  letter-spacing:.01em;padding:13px 22px;border-radius:12px;
+  transition:transform .18s,box-shadow .2s,background .2s,border-color .2s}
+.btn svg{width:15px;height:15px;flex-shrink:0}
+.btn--solid{
+  background:var(--amber);color:#0a0a0b;
+  box-shadow:0 8px 28px rgba(255,255,255,.13)}
+.btn--solid:hover{transform:translateY(-2px);box-shadow:0 12px 38px rgba(255,255,255,.22)}
+.btn--ghost{
+  background:rgba(255,255,255,.04);color:var(--text);
+  border:1px solid var(--line)}
+.btn--ghost:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.36);background:rgba(255,255,255,.08)}
+.btn--wa{
+  background:#25D366;color:#fff;
+  box-shadow:0 8px 22px rgba(37,211,102,.22)}
+.btn--wa:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(37,211,102,.38)}
+.btn:disabled{opacity:.38;pointer-events:none}
+.step__nav{display:flex;justify-content:flex-end;gap:10px;margin-top:28px}
+
+@media(max-width:520px){
+  .toggle-row{flex-direction:column;align-items:flex-start;gap:12px}
+  .back-btn .back-label{display:none}
+  .summary-actions{flex-direction:column}
+  .summary-actions .btn{justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="progress"><div class="progress__fill" id="progressFill"></div></div>
+
+<nav class="flow-nav">
+  <a class="logo-mark" href="chirpdev_v2.html">
+    <span class="glyph">C</span>Chirp<b>Dev</b>
+  </a>
+  <span class="step-counter mono" id="stepCounter">Intro</span>
+  <button class="back-btn" id="backBtn" disabled>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 6l-6 6 6 6"/></svg>
+    <span class="back-label">Back</span>
+  </button>
+</nav>
+
+<div class="flow-wrap">
+
+  <!-- ====== STEP 1 — WELCOME ====== -->
+  <div class="step active" id="step1">
+    <div class="step__inner welcome">
+      <span class="eyebrow welcome__eyebrow">ChirpDev · Project Brief</span>
+      <h1>Let's build<br>your <em>website.</em></h1>
+      <p class="welcome__desc">Jawab beberapa pertanyaan singkat dan kami akan siapkan brief lengkap, rekomendasi paket, dan estimasi harga — siap dikirim langsung ke WhatsApp kami.</p>
+      <button class="btn btn--solid" onclick="goTo(2)">
+        Start my project
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- ====== STEP 2 — PROJECT TYPE ====== -->
+  <div class="step" id="step2">
+    <div class="step__inner">
+      <div class="step-head">
+        <span class="eyebrow">Step 1 of 6 — Project Type</span>
+        <h2>Website apa yang<br>kamu butuhkan?</h2>
+      </div>
+      <div class="type-grid">
+        <div class="type-card" onclick="selectType('cafe',this)">
+          <div class="type-card__body">
+            <div class="type-card__no">/ 01</div>
+            <h3>Cafe &amp; Restaurant</h3>
+            <p>Website bisnis kuliner yang elegan — tampilkan menu, suasana, lokasi, dan jadwal buka dengan desain yang bikin orang pengen dateng.</p>
+          </div>
+          <div class="type-card__radio"></div>
+        </div>
+        <div class="type-card" onclick="selectType('profile',this)">
+          <div class="type-card__body">
+            <div class="type-card__no">/ 02</div>
+            <h3>Company Profile</h3>
+            <p>3–5 halaman · Website brand lengkap dengan about, services, gallery, dan contact. Membangun kepercayaan.</p>
+          </div>
+          <div class="type-card__radio"></div>
+        </div>
+        <div class="type-card" onclick="selectType('wedding',this)">
+          <div class="type-card__body">
+            <div class="type-card__no">/ 03</div>
+            <h3>Undangan Pernikahan</h3>
+            <p>Digital wedding invitation dengan animasi, countdown, galeri foto, RSVP, dan detail acara yang elegan.</p>
+          </div>
+          <div class="type-card__radio"></div>
+        </div>
+        <div class="type-card" onclick="selectType('custom',this)">
+          <div class="type-card__body">
+            <div class="type-card__no">/ 04</div>
+            <h3>Web App / Custom</h3>
+            <p>Sistem booking, POS, ordering, atau fitur custom lainnya. Harga dan timeline setelah konsultasi.</p>
+          </div>
+          <div class="type-card__radio"></div>
+        </div>
+      </div>
+      <div class="step__nav">
+        <button class="btn btn--solid" id="step2Next" disabled onclick="goTo(3)">
+          Next
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== STEP 3 — DETAILS ====== -->
+  <div class="step" id="step3">
+    <div class="step__inner">
+      <div class="step-head">
+        <span class="eyebrow">Step 2 of 6 — Project Details</span>
+        <h2>Ceritakan tentang<br>bisnis &amp; proyekmu.</h2>
+      </div>
+      <p class="step-hint">Apa bisnis kamu? Website untuk apa? Siapa target pengunjungnya?</p>
+      <textarea class="flow-textarea" id="detailsInput" rows="6"
+        placeholder="Contoh: Saya punya kafe di Medan namanya Kebun Coffee. Saya mau website untuk tampilkan menu, foto kafe, dan info kontak. Target pembeli adalah anak muda 20–30 tahun yang suka nugas di kafe..."></textarea>
+      <div class="step__nav">
+        <button class="btn btn--solid" onclick="saveDetails();goTo(4)">
+          Next
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== STEP 4 — ASSETS CHECK ====== -->
+  <div class="step" id="step4">
+    <div class="step__inner">
+      <div class="step-head">
+        <span class="eyebrow">Step 3 of 6 — Assets</span>
+        <h2>Aset apa yang<br>sudah kamu siapkan?</h2>
+      </div>
+      <div class="toggle-group">
+        <div class="toggle-row">
+          <span class="toggle-row__label">Sudah punya logo?</span>
+          <div class="toggle-btns">
+            <button class="toggle-btn yes" onclick="setToggle('hasLogo',true,this)">Ya</button>
+            <button class="toggle-btn no" onclick="setToggle('hasLogo',false,this)">Belum</button>
+          </div>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-row__label">Punya foto bisnis / produk?</span>
+          <div class="toggle-btns">
+            <button class="toggle-btn yes" onclick="setToggle('hasPhotos',true,this)">Ya</button>
+            <button class="toggle-btn no" onclick="setToggle('hasPhotos',false,this)">Belum</button>
+          </div>
+        </div>
+      </div>
+      <label class="field-label" for="refsInput">Referensi website yang kamu suka (opsional)</label>
+      <input class="flow-input" id="refsInput" type="text"
+        placeholder="https://contoh.com, https://satu-lagi.com"
+        oninput="state.references=this.value">
+      <div class="step__nav">
+        <button class="btn btn--solid" onclick="goTo(5)">
+          Next
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== STEP 5 — CONTACT ====== -->
+  <div class="step" id="step5">
+    <div class="step__inner">
+      <div class="step-head">
+        <span class="eyebrow">Step 4 of 6 — Contact Info</span>
+        <h2>Bagaimana cara<br>kami menghubungimu?</h2>
+      </div>
+      <div class="field-group">
+        <div>
+          <label class="field-label" for="nameInput">Nama kamu</label>
+          <input class="flow-input" id="nameInput" type="text"
+            placeholder="Budi Santoso" oninput="state.name=this.value">
+        </div>
+        <div>
+          <label class="field-label" for="bizInput">Nama bisnis</label>
+          <input class="flow-input" id="bizInput" type="text"
+            placeholder="Kebun Coffee" oninput="state.business=this.value">
+        </div>
+        <div>
+          <label class="field-label" for="contactInput">WhatsApp atau Email</label>
+          <input class="flow-input" id="contactInput" type="text"
+            placeholder="08xxxxxxxxxx atau nama@email.com" oninput="state.contact=this.value">
+        </div>
+      </div>
+      <div class="step__nav">
+        <button class="btn btn--solid" onclick="goToEstimate()">
+          Lihat estimasi harga
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== STEP 6 — ESTIMATE ====== -->
+  <div class="step" id="step6">
+    <div class="step__inner">
+      <div class="step-head">
+        <span class="eyebrow">Step 5 of 6 — Estimate</span>
+        <h2>Paket yang<br>kami rekomendasikan.</h2>
+      </div>
+      <div class="estimate-card" id="estimateCard"></div>
+      <div class="step__nav">
+        <button class="btn btn--solid" onclick="buildSummary();goTo(7)">
+          Generate project brief
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== STEP 7 — SUMMARY ====== -->
+  <div class="step" id="step7">
+    <div class="step__inner">
+      <div class="step-head">
+        <span class="eyebrow">Step 6 of 6 — Done</span>
+        <h2>Brief proyekmu<br>sudah siap.</h2>
+      </div>
+      <div class="summary-card" id="summaryCard"></div>
+      <div class="summary-actions">
+        <button class="btn btn--ghost" id="copyBtn" onclick="copySummary()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy summary
+        </button>
+        <button class="btn btn--wa" onclick="sendWA()">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          Kirim via WhatsApp
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /flow-wrap -->
+
+<script>
+/* ===== STATE ===== */
+var state = {
+  projectType: null,
+  projectLabel: '',
+  details: '',
+  hasLogo: null,
+  hasPhotos: null,
+  references: '',
+  name: '',
+  business: '',
+  contact: ''
+};
+
+var currentStep = 1;
+var TOTAL = 7;
+
+/* ===== NAVIGATION ===== */
+function goTo(n) {
+  var prev = document.getElementById('step' + currentStep);
+  var next = document.getElementById('step' + n);
+  if (!prev || !next) return;
+
+  prev.classList.add('exit');
+  prev.classList.remove('active');
+  setTimeout(function () { prev.classList.remove('exit'); }, 380);
+
+  next.classList.add('active');
+  currentStep = n;
+  updateProgress();
+}
+
+function updateProgress() {
+  var pct = ((currentStep - 1) / (TOTAL - 1)) * 100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  var labels = ['Intro', 'Project Type', 'Details', 'Assets', 'Contact', 'Estimate', 'Brief Ready'];
+  document.getElementById('stepCounter').textContent = labels[currentStep - 1] || ('Step ' + currentStep);
+  document.getElementById('backBtn').disabled = currentStep <= 1;
+}
+
+document.getElementById('backBtn').addEventListener('click', function () {
+  if (currentStep > 1) goTo(currentStep - 1);
+});
+
+/* ===== STEP 2 — TYPE ===== */
+function selectType(type, el) {
+  state.projectType = type;
+  var labels = { cafe: 'Cafe & Restaurant', profile: 'Company Profile', wedding: 'Undangan Pernikahan', custom: 'Web App / Custom' };
+  state.projectLabel = labels[type];
+  document.querySelectorAll('.type-card').forEach(function (c) { c.classList.remove('selected'); });
+  el.classList.add('selected');
+  document.getElementById('step2Next').disabled = false;
+}
+
+/* ===== STEP 3 — DETAILS ===== */
+function saveDetails() {
+  state.details = document.getElementById('detailsInput').value;
+}
+
+/* ===== STEP 4 — TOGGLES ===== */
+function setToggle(key, val, btn) {
+  state[key] = val;
+  var row = btn.closest('.toggle-row');
+  row.querySelectorAll('.toggle-btn').forEach(function (b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+
+/* ===== STEP 6 — ESTIMATE ===== */
+var packages = {
+  cafe: {
+    name: 'Cafe & Restaurant',
+    timeline: '3 – 5 hari kerja',
+    note: 'Website kuliner premium dengan tampilan menu, galeri suasana, info lokasi & jam buka. Responsif di semua perangkat, termasuk 2x revisi.'
+  },
+  profile: {
+    name: 'Company Profile',
+    timeline: '4 – 7 hari kerja',
+    note: 'Website 3–5 halaman lengkap, desain premium, responsif, termasuk 2x revisi.'
+  },
+  wedding: {
+    name: 'Undangan Pernikahan',
+    timeline: '1 – 3 hari kerja',
+    note: 'Digital invitation dengan animasi, countdown, galeri, RSVP, dan peta lokasi. Termasuk 2x revisi.'
+  },
+  custom: {
+    name: 'Web App / Custom Feature',
+    timeline: 'Estimasi setelah konsultasi',
+    note: 'Timeline dan scope ditentukan setelah diskusi mendalam tentang fitur dan kebutuhan teknis.'
+  }
+};
+
+function goToEstimate() {
+  state.name      = document.getElementById('nameInput').value;
+  state.business  = document.getElementById('bizInput').value;
+  state.contact   = document.getElementById('contactInput').value;
+  state.references = document.getElementById('refsInput').value;
+
+  var pkg = packages[state.projectType] || packages.cafe;
+  document.getElementById('estimateCard').innerHTML =
+    '<div class="estimate-card__pkg">/ Paket Rekomendasi</div>' +
+    '<h3>' + pkg.name + '</h3>' +
+    '<div class="estimate-card__timeline mono" style="margin-top:14px">Estimasi · ' + pkg.timeline + '</div>' +
+    '<div class="estimate-card__note">' + pkg.note +
+      '<div class="process-flow">' +
+        '<span class="process-flow__step">50% DP</span><span class="process-flow__arrow">→</span>' +
+        '<span class="process-flow__step">Design</span><span class="process-flow__arrow">→</span>' +
+        '<span class="process-flow__step">Preview</span><span class="process-flow__arrow">→</span>' +
+        '<span class="process-flow__step">2x Revisi</span><span class="process-flow__arrow">→</span>' +
+        '<span class="process-flow__step">Pelunasan</span><span class="process-flow__arrow">→</span>' +
+        '<span class="process-flow__step">Live</span>' +
+      '</div>' +
+    '</div>';
+
+  goTo(6);
+}
+
+/* ===== STEP 7 — SUMMARY ===== */
+function buildSummary() {
+  var pkg      = packages[state.projectType] || packages.cafe;
+  var logoStr  = state.hasLogo === true ? 'Ya, sudah ada' : state.hasLogo === false ? 'Belum ada' : '-';
+  var photoStr = state.hasPhotos === true ? 'Ya, sudah ada' : state.hasPhotos === false ? 'Belum ada' : '-';
+  var details  = document.getElementById('detailsInput').value || '-';
+
+  var text =
+    'ChirpDev — Project Brief\n' +
+    '══════════════════════════════\n\n' +
+    '[ CLIENT ]\n' +
+    'Nama        : ' + (state.name || '-') + '\n' +
+    'Bisnis      : ' + (state.business || '-') + '\n' +
+    'Kontak      : ' + (state.contact || '-') + '\n\n' +
+    '[ PROJECT ]\n' +
+    'Tipe        : ' + (state.projectLabel || '-') + '\n' +
+    'Detail      :\n' + details + '\n\n' +
+    '[ ASET ]\n' +
+    'Logo        : ' + logoStr + '\n' +
+    'Foto        : ' + photoStr + '\n' +
+    'Referensi   : ' + (state.references || '-') + '\n\n' +
+    '[ PAKET ]\n' +
+    'Nama        : ' + pkg.name + '\n' +
+    'Timeline    : ' + pkg.timeline + '\n' +
+    'Revisi      : 2x\n\n' +
+    '[ ALUR KERJA ]\n' +
+    '50% DP → Design → Preview → 2x Revisi → Pelunasan → Website Live\n\n' +
+    '──────────────────────────────\n' +
+    'Generated via ChirpDev Flow\n' +
+    'WA: 082274948288  |  ig: chrip.dev';
+
+  document.getElementById('summaryCard').textContent = text;
+  window._summaryText = text;
+}
+
+function copySummary() {
+  if (!window._summaryText) return;
+  navigator.clipboard.writeText(window._summaryText).then(function () {
+    var btn = document.getElementById('copyBtn');
+    var orig = btn.innerHTML;
+    btn.textContent = 'Copied!';
+    setTimeout(function () { btn.innerHTML = orig; }, 2200);
+  });
+}
+
+function sendWA() {
+  if (!window._summaryText) return;
+  window.open('https://wa.me/6282274948288?text=' + encodeURIComponent(window._summaryText), '_blank');
+}
+
+/* init */
+updateProgress();
+</script>
+</body>
+</html>
