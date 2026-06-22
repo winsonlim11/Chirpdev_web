@@ -444,6 +444,69 @@ section{scroll-margin-top:90px}
   content:"—";position:absolute;left:0;
   font-family:"JetBrains Mono",monospace;font-size:11px;
   color:var(--amber);line-height:1.7}
+/* three-up package grid (project packages) */
+.pkg-grid--3{grid-template-columns:repeat(3,1fr)}
+.pkg__price--range b{font-size:clamp(19px,2.2vw,25px)}
+.pkg--feature{
+  border-color:rgba(255,255,255,.24);
+  background:linear-gradient(165deg,#1a1a22,#0f0f13);
+  position:relative;overflow:hidden}
+.pkg--feature::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--amber) 40%,transparent)}
+.pkg__ribbon{
+  position:absolute;top:18px;right:-34px;transform:rotate(40deg);
+  background:var(--amber);color:#0a0a0b;
+  font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;
+  padding:4px 38px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.pkg__bonus{
+  list-style:none;margin:14px 0 0;padding:14px 0 0;
+  border-top:1px dashed var(--hair);
+  display:flex;flex-direction:column;gap:8px}
+.pkg__bonus li{
+  font-size:12.5px;color:rgba(244,236,221,.72);
+  padding-left:22px;position:relative;line-height:1.55}
+.pkg__bonus li::before{content:"🎁";position:absolute;left:0;top:-1px;font-size:11px}
+.pkg__meta{
+  display:flex;flex-direction:column;gap:9px;
+  margin-top:20px;padding-top:18px;border-top:1px solid var(--hair)}
+.pkg__meta-row{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.pkg__meta-row span{
+  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim);flex-shrink:0}
+.pkg__meta-row b{font-size:12.5px;font-weight:600;color:var(--text);text-align:right}
+/* addon services */
+.addon-head{margin:clamp(56px,7vh,84px) 0 28px}
+.addon-head h3{font-size:clamp(21px,2.6vw,28px);font-weight:800;letter-spacing:-.02em;margin:10px 0 0}
+.addon-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:start}
+.addon-card{
+  border:1px solid var(--hair);border-radius:16px;background:var(--ink-2);
+  padding:clamp(22px,2.6vw,30px);transition:border-color .3s,background .3s}
+.addon-card:hover{background:#111116;border-color:rgba(255,255,255,.18)}
+.addon-card h4{font-size:16px;font-weight:800;letter-spacing:-.01em;margin:0 0 6px}
+.addon-card__price{
+  font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--amber);
+  margin:0 0 14px}
+.addon-card__desc{font-size:12.5px;color:var(--dim);margin:0 0 14px;line-height:1.6}
+.addon-card ul{
+  list-style:none;margin:0;padding:14px 0 0;border-top:1px solid var(--hair);
+  display:flex;flex-direction:column;gap:8px}
+.addon-card ul li{
+  font-size:12.5px;color:rgba(244,236,221,.66);padding-left:16px;position:relative;line-height:1.55}
+.addon-card ul li::before{
+  content:"—";position:absolute;left:0;color:var(--amber);
+  font-family:"JetBrains Mono",monospace;font-size:10px}
+.addon-card__chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 14px}
+.addon-card__note{
+  font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--dim-2);
+  margin:12px 0 0;line-height:1.7}
+.pricing-foot{
+  margin-top:clamp(32px,4vw,44px);text-align:center;
+  font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--dim);letter-spacing:.04em}
+@media(max-width:980px){
+  .pkg-grid--3,.addon-grid{grid-template-columns:1fr}
+}
 /* info grid */
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .info-card{
@@ -1110,10 +1173,177 @@ section{scroll-margin-top:90px}
   <section class="sec" id="pricing">
     <div class="container">
       <div class="sec__head reveal">
-        <span class="eyebrow">Sebelum beli — yang perlu kamu tau</span>
-        <h2>Transparan dari awal.</h2>
-        <p>Pilihan hosting, syarat, dan jawaban atas pertanyaan yang sering ditanya —
-           supaya kamu bisa memutuskan dengan yakin.</p>
+        <span class="eyebrow">ChirpDev Services &amp; Pricing</span>
+        <h2>Paket yang jelas, hasil yang nyata.</h2>
+        <p>Website modern, profesional, dan mobile friendly untuk UMKM, Cafe, Coffee Shop,
+           Restaurant, Barbershop, Gym, Company Profile, Personal Branding, dan bisnis lainnya.</p>
+      </div>
+
+      <div class="pkg-grid pkg-grid--3 reveal">
+        <div class="pkg">
+          <div class="pkg__badge">/ 01 — Basic</div>
+          <h3 class="pkg__title">Website Basic</h3>
+          <p class="pkg__sub">Cocok untuk bisnis yang membutuhkan website profesional dengan biaya terjangkau.</p>
+          <div class="pkg__price pkg__price--range"><b>Rp700.000–1.100.000</b></div>
+          <p class="pkg__note">Sekali bayar &nbsp;·&nbsp; final sesuai kompleksitas</p>
+          <ul class="pkg__list">
+            <li>Website modern &amp; mobile friendly</li>
+            <li>Hingga 5 section halaman</li>
+            <li>WhatsApp Integration &amp; Google Maps</li>
+            <li>Contact Form</li>
+            <li>Basic SEO Setup</li>
+            <li>Maksimal 10–18 foto dari klien</li>
+          </ul>
+          <div class="pkg__meta">
+            <div class="pkg__meta-row"><span>Revisi</span><b>1x gratis · +Rp75rb/revisi</b></div>
+            <div class="pkg__meta-row"><span>Pengerjaan</span><b>3–7 hari kerja</b></div>
+          </div>
+        </div>
+
+        <div class="pkg pkg--premium">
+          <div class="pkg__badge">/ 02 — Premium</div>
+          <h3 class="pkg__title">Website Premium</h3>
+          <p class="pkg__sub">Cocok untuk bisnis yang ingin tampil lebih profesional, modern, dan eksklusif.</p>
+          <div class="pkg__price pkg__price--range"><b>Rp1.500.000–2.000.000</b></div>
+          <p class="pkg__note">Sekali bayar &nbsp;·&nbsp; final sesuai kompleksitas</p>
+          <ul class="pkg__list">
+            <li>Desain premium &amp; animasi modern</li>
+            <li>Hingga 10 section halaman</li>
+            <li>WhatsApp Integration &amp; Google Maps</li>
+            <li>Form Reservasi / Booking</li>
+            <li>Advanced Gallery</li>
+            <li>Basic SEO Setup &amp; Multi Bahasa gratis</li>
+            <li>Maksimal 60–80 foto dari klien</li>
+          </ul>
+          <div class="pkg__meta">
+            <div class="pkg__meta-row"><span>Revisi</span><b>3x gratis · +Rp75rb/revisi</b></div>
+            <div class="pkg__meta-row"><span>Pengerjaan</span><b>7–14 hari kerja</b></div>
+          </div>
+        </div>
+
+        <div class="pkg pkg--feature">
+          <div class="pkg__ribbon">Best Seller</div>
+          <div class="pkg__badge">/ 03 — F&amp;B Lengkap</div>
+          <h3 class="pkg__title">Premium + QR Menu Digital</h3>
+          <p class="pkg__sub">Untuk Cafe, Coffee Shop, Restaurant &amp; bisnis F&amp;B yang mau website premium sekaligus menu digital.</p>
+          <div class="pkg__price"><b>Rp3.999.000</b></div>
+          <p class="pkg__note">Sekali bayar &nbsp;·&nbsp; bonus sudah termasuk</p>
+          <ul class="pkg__list">
+            <li>Semua fitur Website Premium</li>
+            <li>QR Menu Digital interaktif + QR code per meja</li>
+            <li>Menu makanan &amp; minuman digital, kategori terorganisir</li>
+            <li>WhatsApp Order</li>
+            <li>Integrasi Instagram, Facebook &amp; TikTok</li>
+            <li>Integrasi GrabFood, GoFood &amp; ShopeeFood</li>
+            <li>Link marketplace &amp; delivery platform</li>
+            <li>Maksimal 60–80 foto dari klien</li>
+          </ul>
+          <ul class="pkg__bonus">
+            <li>Domain .com gratis 1 tahun</li>
+            <li>Setup QR Menu gratis</li>
+            <li>Garansi bug fix 30 hari</li>
+          </ul>
+          <div class="pkg__meta">
+            <div class="pkg__meta-row"><span>Revisi</span><b>3x gratis · +Rp75rb/revisi</b></div>
+            <div class="pkg__meta-row"><span>Pengerjaan</span><b>10–14 hari kerja</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="addon-head reveal">
+        <span class="eyebrow">Layanan Tambahan</span>
+        <h3>Lengkapi proyek kamu.</h3>
+      </div>
+      <div class="addon-grid reveal">
+        <div class="addon-card">
+          <h4>Desain Menu Digital</h4>
+          <p class="addon-card__price">Mulai dari Rp620.000</p>
+          <ul>
+            <li>Desain menu cafe/restoran profesional</li>
+            <li>Layout modern &amp; elegan</li>
+            <li>Siap cetak dan digital</li>
+          </ul>
+        </div>
+        <div class="addon-card">
+          <h4>Desain Logo</h4>
+          <p class="addon-card__price">Mulai dari Rp350.000</p>
+          <ul>
+            <li>Logo profesional</li>
+            <li>File PNG transparan</li>
+            <li>Cocok untuk website, media sosial &amp; branding</li>
+          </ul>
+        </div>
+        <div class="addon-card">
+          <h4>Portfolio Package</h4>
+          <p class="addon-card__price">Mulai dari Rp400.000</p>
+          <p class="addon-card__desc">Khusus untuk klien yang mau bekerja sama dalam pengembangan portfolio ChirpDev.</p>
+          <div class="addon-card__chips">
+            <span class="chip">CV Website</span><span class="chip">Personal Website</span>
+            <span class="chip">Landing Page</span><span class="chip">Company Profile</span>
+            <span class="chip">Website Event</span><span class="chip">Portfolio</span>
+          </div>
+          <ul>
+            <li>Website profesional &amp; mobile friendly, desain menyesuaikan kebutuhan</li>
+            <li>WhatsApp Integration &amp; Google Maps (jika perlu)</li>
+            <li>1x revisi gratis · +Rp75.000/revisi tambahan</li>
+          </ul>
+          <p class="addon-card__note">Ditampilkan di portfolio ChirpDev &middot; harga menyesuaikan kompleksitas project.</p>
+        </div>
+      </div>
+
+      <div class="info-grid reveal">
+        <div class="info-card">
+          <div class="info-card__label">Ketentuan Umum</div>
+          <ol class="tnc-list">
+            <li>DP minimal 50% wajib sebelum pengerjaan dimulai</li>
+            <li>Pelunasan dilakukan sebelum website diserahkan</li>
+            <li>Domain &amp; hosting belum termasuk, kecuali paket Premium + QR Menu Digital</li>
+            <li>Semua foto, logo, dan konten disediakan oleh klien</li>
+            <li>Perubahan di luar kesepakatan awal dikenakan biaya tambahan</li>
+            <li>Garansi perbaikan bug selama 30 hari setelah website selesai</li>
+            <li>Harga dapat berubah sesuai tingkat kesulitan &amp; kebutuhan project</li>
+            <li>Terintegrasi dengan WhatsApp, Instagram, Facebook, TikTok, GrabFood, GoFood, ShopeeFood, marketplace &amp; platform digital lain sesuai kebutuhan</li>
+          </ol>
+        </div>
+        <div class="info-card">
+          <div class="info-card__label">FAQ</div>
+          <div class="faq">
+            <details class="faq__item">
+              <summary>Apa bedanya Basic, Premium, dan Premium + QR Menu?</summary>
+              <p>Basic untuk profil bisnis simpel, Premium untuk tampilan lebih eksklusif dengan fitur lebih lengkap, dan Premium + QR Menu khusus bisnis F&amp;B yang butuh menu digital sekaligus website.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Apakah domain &amp; hosting sudah termasuk?</summary>
+              <p>Belum, kecuali paket Premium + QR Menu Digital yang sudah termasuk domain .com gratis 1 tahun. Untuk paket lain, domain &amp; hosting tersedia lewat layanan terpisah.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Bagaimana cara mulai proyek?</summary>
+              <p>Hubungi kami, lalu bayar DP minimal 50% sebelum pengerjaan dimulai. Sisanya dilunasi sebelum website diserahkan.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Apakah ada garansi setelah website jadi?</summary>
+              <p>Ya, garansi perbaikan bug selama 30 hari setelah website selesai dikerjakan.</p>
+            </details>
+            <details class="faq__item">
+              <summary>Bagaimana jika butuh revisi lebih banyak?</summary>
+              <p>Revisi gratis sesuai paket, revisi tambahan di luar itu dikenakan Rp75.000/revisi.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <p class="pricing-foot">Terima kasih telah mempercayakan kebutuhan website Anda kepada ChirpDev.</p>
+    </div>
+  </section>
+
+  <!-- ---- DOMAIN & HOSTING ---- -->
+  <section class="sec" id="hosting">
+    <div class="container">
+      <div class="sec__head reveal">
+        <span class="eyebrow">Setelah website jadi — biaya jalan</span>
+        <h2>Domain &amp; hosting, transparan dari awal.</h2>
+        <p>Belum termasuk di paket website di atas (kecuali Premium + QR Menu Digital) —
+           pilih salah satu di bawah supaya website kamu tetap online.</p>
       </div>
 
       <div class="pkg-grid reveal">
@@ -1155,7 +1385,6 @@ section{scroll-margin-top:90px}
             <li>Keterlambatan pembayaran menyebabkan website tidak dapat diakses</li>
             <li>Website diaktifkan kembali setelah pembayaran dilunasi</li>
             <li>Nama domain yang sudah dibeli tidak dapat diganti</li>
-            <li>Konten, foto, dan teks website disiapkan oleh client</li>
             <li>Perubahan desain di luar kesepakatan awal dikenakan biaya tambahan</li>
             <li>Pembayaran yang sudah dilakukan tidak dapat dikembalikan (non-refund)</li>
           </ol>
@@ -1176,8 +1405,8 @@ section{scroll-margin-top:90px}
               <p>Website akan dinonaktifkan sementara hingga pembayaran dilunasi.</p>
             </details>
             <details class="faq__item">
-              <summary>Apakah bisa upgrade dari gratis ke premium?</summary>
-              <p>Bisa! Hubungi kami kapan saja untuk upgrade paket.</p>
+              <summary>Apakah bisa upgrade dari Hemat ke Premium?</summary>
+              <p>Bisa! Hubungi kami kapan saja untuk upgrade paket domain.</p>
             </details>
             <details class="faq__item">
               <summary>Berapa lama proses aktivasi domain?</summary>
