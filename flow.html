@@ -316,7 +316,7 @@ input,textarea,button{font-family:inherit;color:inherit}
         <h2>Ceritakan tentang<br>bisnis &amp; proyekmu.</h2>
       </div>
       <p class="step-hint">Apa bisnis kamu? Website untuk apa? Siapa target pengunjungnya?</p>
-      <textarea class="flow-textarea" id="detailsInput" rows="6"
+      <textarea class="flow-textarea" id="detailsInput" rows="6" maxlength="1000"
         placeholder="Contoh: Saya punya kafe di Medan namanya Kebun Coffee. Saya mau website untuk tampilkan menu, foto kafe, dan info kontak. Target pembeli adalah anak muda 20–30 tahun yang suka nugas di kafe..."></textarea>
       <div class="step__nav">
         <button class="btn btn--solid" onclick="saveDetails();goTo(4)">
@@ -351,7 +351,7 @@ input,textarea,button{font-family:inherit;color:inherit}
         </div>
       </div>
       <label class="field-label" for="refsInput">Referensi website yang kamu suka (opsional)</label>
-      <input class="flow-input" id="refsInput" type="text"
+      <input class="flow-input" id="refsInput" type="text" maxlength="300"
         placeholder="https://contoh.com, https://satu-lagi.com"
         oninput="state.references=this.value">
       <div class="step__nav">
@@ -373,17 +373,17 @@ input,textarea,button{font-family:inherit;color:inherit}
       <div class="field-group">
         <div>
           <label class="field-label" for="nameInput">Nama kamu</label>
-          <input class="flow-input" id="nameInput" type="text"
+          <input class="flow-input" id="nameInput" type="text" maxlength="60" autocomplete="name"
             placeholder="Budi Santoso" oninput="state.name=this.value">
         </div>
         <div>
           <label class="field-label" for="bizInput">Nama bisnis</label>
-          <input class="flow-input" id="bizInput" type="text"
+          <input class="flow-input" id="bizInput" type="text" maxlength="60"
             placeholder="Kebun Coffee" oninput="state.business=this.value">
         </div>
         <div>
           <label class="field-label" for="contactInput">WhatsApp atau Email</label>
-          <input class="flow-input" id="contactInput" type="text"
+          <input class="flow-input" id="contactInput" type="text" maxlength="80"
             placeholder="08xxxxxxxxxx atau nama@email.com" oninput="state.contact=this.value">
         </div>
       </div>
@@ -534,21 +534,42 @@ function goToEstimate() {
   state.references = document.getElementById('refsInput').value;
 
   var pkg = packages[state.projectType] || packages.cafe;
-  document.getElementById('estimateCard').innerHTML =
-    '<div class="estimate-card__pkg">/ Paket Rekomendasi</div>' +
-    '<h3>' + pkg.name + '</h3>' +
-    '<div class="estimate-card__timeline mono" style="margin-top:14px">Estimasi · ' + pkg.timeline + '</div>' +
-    '<div class="estimate-card__note">' + pkg.note +
-      '<div class="process-flow">' +
-        '<span class="process-flow__step">50% DP</span><span class="process-flow__arrow">→</span>' +
-        '<span class="process-flow__step">Design</span><span class="process-flow__arrow">→</span>' +
-        '<span class="process-flow__step">Preview</span><span class="process-flow__arrow">→</span>' +
-        '<span class="process-flow__step">2x Revisi</span><span class="process-flow__arrow">→</span>' +
-        '<span class="process-flow__step">Pelunasan</span><span class="process-flow__arrow">→</span>' +
-        '<span class="process-flow__step">Live</span>' +
-      '</div>' +
-    '</div>';
+  var card = document.getElementById('estimateCard');
+  card.textContent = '';
 
+  var elPkg = document.createElement('div');
+  elPkg.className = 'estimate-card__pkg';
+  elPkg.textContent = '/ Paket Rekomendasi';
+
+  var elName = document.createElement('h3');
+  elName.textContent = pkg.name;
+
+  var elTimeline = document.createElement('div');
+  elTimeline.className = 'estimate-card__timeline mono';
+  elTimeline.style.marginTop = '14px';
+  elTimeline.textContent = 'Estimasi · ' + pkg.timeline;
+
+  var elNote = document.createElement('div');
+  elNote.className = 'estimate-card__note';
+  elNote.appendChild(document.createTextNode(pkg.note));
+
+  var elFlow = document.createElement('div');
+  elFlow.className = 'process-flow';
+  ['50% DP', 'Design', 'Preview', '2x Revisi', 'Pelunasan', 'Live'].forEach(function (label, i) {
+    if (i > 0) {
+      var arrow = document.createElement('span');
+      arrow.className = 'process-flow__arrow';
+      arrow.textContent = '→';
+      elFlow.appendChild(arrow);
+    }
+    var step = document.createElement('span');
+    step.className = 'process-flow__step';
+    step.textContent = label;
+    elFlow.appendChild(step);
+  });
+  elNote.appendChild(elFlow);
+
+  card.append(elPkg, elName, elTimeline, elNote);
   goTo(6);
 }
 
@@ -599,7 +620,7 @@ function copySummary() {
 
 function sendWA() {
   if (!window._summaryText) return;
-  window.open('https://wa.me/6282274948288?text=' + encodeURIComponent(window._summaryText), '_blank');
+  window.open('https://wa.me/6282274948288?text=' + encodeURIComponent(window._summaryText), '_blank', 'noopener,noreferrer');
 }
 
 /* init */
