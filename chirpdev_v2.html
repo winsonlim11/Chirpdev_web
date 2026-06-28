@@ -119,6 +119,19 @@ section{scroll-margin-top:90px}
   display:block;line-height:1;font-family:"JetBrains Mono",monospace}
 .hero__stat span{font-size:clamp(7px,1.6vw,9px);letter-spacing:.1em;text-transform:uppercase;
   color:var(--dim);white-space:nowrap}
+.hero__mascot{
+  position:absolute;left:clamp(-16px,-3vw,2px);top:clamp(-18px,-3vh,4px);z-index:2;
+  width:clamp(48px,9vw,72px);filter:drop-shadow(0 10px 18px rgba(0,0,0,.5));
+  animation:mascotBob 3.4s ease-in-out infinite}
+.hero__mascot .wing{transform-origin:17px 35px;animation:mascotFlap 1.15s ease-in-out infinite}
+@keyframes mascotBob{
+  0%,100%{transform:translateY(0) rotate(-3deg)}
+  50%{transform:translateY(-9px) rotate(3deg)}
+}
+@keyframes mascotFlap{
+  0%,100%{transform:rotate(0deg)}
+  50%{transform:rotate(-24deg)}
+}
 .hero__live{position:absolute;left:clamp(20px,5vw,72px);bottom:34px;
   font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;
   text-transform:uppercase;color:var(--dim);display:flex;align-items:center;gap:10px}
@@ -695,6 +708,7 @@ section{scroll-margin-top:90px}
   .acc__item,.acc__label,.acc__meta{transition:none}
   .float{opacity:1;animation:none}
   .float__in{animation:none}
+  .hero__mascot,.hero__mascot .wing{animation:none}
 }
 </style>
 </head>
@@ -803,6 +817,15 @@ section{scroll-margin-top:90px}
         <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.5C.5 9 2 5.5 5.5 5.5c2 0 3.5 1.3 4.5 2.7C11 6.8 12.5 5.5 14.5 5.5 18 5.5 19.5 9 19.5 12.5 17 16.65 12 21 12 21z"/></svg>
         <div><b>12+</b><span>Builds shipped</span></div>
       </div>
+      <svg class="hero__mascot" viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M14 38 L2 32 L4 44 Z" fill="var(--text)"/>
+        <ellipse cx="30" cy="36" rx="18" ry="15" fill="var(--text)"/>
+        <path class="wing" d="M22 30 Q10 28 8 40 Q18 42 26 36 Z" fill="var(--ink-2)" stroke="var(--text)" stroke-width="1.5"/>
+        <path d="M28 50 L26 58 M34 50 L36 58" stroke="var(--text)" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="46" cy="24" r="11" fill="var(--text)"/>
+        <path d="M56 22 L64 24 L56 27 Z" fill="var(--amber)"/>
+        <circle cx="49" cy="21" r="2" fill="#0a0a0b"/>
+      </svg>
     </div>
   </div>
   <div class="hero__live">
