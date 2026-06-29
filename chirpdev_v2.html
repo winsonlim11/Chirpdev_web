@@ -541,27 +541,6 @@ section{scroll-margin-top:90px}
 @media(max-width:980px){
   .pkg-grid--3,.addon-grid{grid-template-columns:1fr}
 }
-/* ---------- hero easter egg (small lazy-loaded 3D embed) ---------- */
-.hero__egg-wrap{
-  position:absolute;top:clamp(86px,13vh,128px);right:clamp(16px,4vw,48px);z-index:2;
-  display:flex;flex-direction:column;align-items:flex-end;gap:7px;pointer-events:auto;
-  animation:fadeIn .8s 1.8s ease both}
-.hero__egg-cap{
-  font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.1em;
-  text-transform:uppercase;color:rgba(244,236,221,.7);text-shadow:0 2px 10px rgba(0,0,0,.7)}
-.hero__egg{
-  position:relative;width:clamp(170px,24vw,260px);height:clamp(170px,24vw,260px);
-  aspect-ratio:1;border-radius:18px;flex-shrink:0;
-  overflow:hidden;border:1px solid var(--hair);background:#050505;
-  box-shadow:0 18px 44px rgba(0,0,0,.55)}
-.hero__egg iframe{position:absolute;left:0;top:0;width:100%;height:148%;border:0;opacity:0;
-  transition:opacity .6s ease}
-.hero__egg.is-loaded iframe{opacity:1}
-.hero__egg-hint{
-  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;
-  color:var(--dim-2);pointer-events:none;transition:opacity .4s ease}
-.hero__egg.is-loaded .hero__egg-hint{opacity:0}
 /* info grid */
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .info-card{
@@ -813,13 +792,6 @@ section{scroll-margin-top:90px}
         <div class="hero__bar-item"><b>12+</b>&nbsp;builds shipped</div>
         <a class="hero__bar-item" href="flow.html">Start a build <span class="plus">+</span></a>
       </div>
-    </div>
-  </div>
-  <div class="hero__egg-wrap">
-    <span class="hero__egg-cap">👻 just for fun</span>
-    <div class="hero__egg" id="eggFrame">
-      <iframe data-src="https://my.spline.design/scaredonhalloween-zgBu8BKss6CT6CaGoL0Xoq6e/" loading="lazy" title="3D easter egg"></iframe>
-      <div class="hero__egg-hint">3D</div>
     </div>
   </div>
   <div class="hero__live">
@@ -1701,22 +1673,6 @@ else{
   },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
   reveals.forEach(r=>io.observe(r));
 }
-
-/* defer the small 3D easter egg in the hero until after everything critical has loaded,
-   so it never competes with the hero photo/fonts for bandwidth on first paint */
-(function(){
-  const egg=document.getElementById('eggFrame');
-  if(!egg)return;
-  const iframe=egg.querySelector('iframe');
-  function load(){
-    if(iframe.src)return;
-    iframe.src=iframe.dataset.src;
-    iframe.addEventListener('load',()=>egg.classList.add('is-loaded'),{once:true});
-  }
-  function schedule(){ setTimeout(load,1200); }
-  if(document.readyState==='complete'){schedule();}
-  else{window.addEventListener('load',schedule,{once:true});}
-})();
 
 /* 3D tilt on frames */
 if(!reduce){
