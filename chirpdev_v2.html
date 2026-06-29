@@ -541,6 +541,20 @@ section{scroll-margin-top:90px}
 @media(max-width:980px){
   .pkg-grid--3,.addon-grid{grid-template-columns:1fr}
 }
+/* ---------- easter egg (lazy-loaded 3D embed) ---------- */
+.egg-frame{
+  position:relative;max-width:480px;margin:0 auto;aspect-ratio:4/3;
+  border-radius:20px;overflow:hidden;border:1px solid var(--hair);
+  background:#050505;box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.egg-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;opacity:0;
+  transition:opacity .6s ease}
+.egg-frame.is-loaded iframe{opacity:1}
+.egg-frame__hint{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--dim-2);pointer-events:none;
+  transition:opacity .4s ease}
+.egg-frame.is-loaded .egg-frame__hint{opacity:0}
 /* info grid */
 .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .info-card{
@@ -1455,6 +1469,21 @@ section{scroll-margin-top:90px}
     </div>
   </section>
 
+  <!-- ---- EASTER EGG ---- -->
+  <section class="sec" id="easter-egg">
+    <div class="container">
+      <div class="sec__head reveal">
+        <span class="eyebrow">🎃 Just for fun</span>
+        <h2>Don't mind him.</h2>
+        <p>An interactive 3D doodle — no functional purpose, just vibes. Move your cursor around.</p>
+      </div>
+      <div class="egg-frame reveal" id="eggFrame">
+        <iframe data-src="https://my.spline.design/scaredonhalloween-zgBu8BKss6CT6CaGoL0Xoq6e/" loading="lazy" title="3D easter egg"></iframe>
+        <div class="egg-frame__hint">Loading 3D…</div>
+      </div>
+    </div>
+  </section>
+
 </div><!-- /sheet -->
 
 <!-- ============ CONTACT ============ -->
@@ -1672,6 +1701,25 @@ else{
   },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
   reveals.forEach(r=>io.observe(r));
 }
+
+/* lazy-load the 3D easter egg iframe only once it's about to scroll into view */
+(function(){
+  const egg=document.getElementById('eggFrame');
+  if(!egg)return;
+  const iframe=egg.querySelector('iframe');
+  function load(){
+    if(iframe.src)return;
+    iframe.src=iframe.dataset.src;
+    iframe.addEventListener('load',()=>egg.classList.add('is-loaded'),{once:true});
+  }
+  if(!('IntersectionObserver'in window)){load();}
+  else{
+    const io=new IntersectionObserver((entries)=>{
+      entries.forEach(en=>{if(en.isIntersecting){load();io.disconnect();}});
+    },{rootMargin:'200px 0px'});
+    io.observe(egg);
+  }
+})();
 
 /* 3D tilt on frames */
 if(!reduce){
